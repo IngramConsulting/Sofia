@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sofia Grassivaro - Makeup Artist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: transparent;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .logo {
+            font-family: 'Avenir Book', 'Avenir', sans-serif;
+            font-size: 25px;
+            font-weight: 500;
+            color: white;
+            transition: color 0.3s ease;
+        }
+        .hamburger {
+            display: block;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        .hamburger div {
+            width: 30px;
+            height: 4px;
+            background-color: white;
+            margin: 6px;
+            transition: 0.3s;
+        }
+        
+        header.scrolled .logo {
+            color: #b21f28;
+        }
+        header.scrolled .hamburger div {
+            background-color: #b21f28;
+        }
+
+        .sidebar {
+            position: fixed;
+            right: -250px;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(100px);
+            padding: 80px 30px;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            transition: 0.4s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-family: 'ModernoOT', serif;
+            z-index: 1001; /* Added to ensure sidebar stays on top */
+        }
+        .sidebar.active {
+            right: 0;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        .sidebar ul li {
+            margin-bottom: 20px;
+        }
+        .sidebar ul li a {
+            color: #b21f28;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        .sidebar ul li a:hover {
+            color: #1c1c1c;
+            transform: scale(1.2);
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('1.JPG') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero img {
+            max-width: 700px;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 {
+            font-size: 2.5vw;
+            font-weight: 400;
+            margin: 0;
+            font-family: 'Avenir Book', 'Avenir', sans-serif;
+            letter-spacing: 0.55em;
+            color: white;
+        }
+
+        @font-face {
+            font-family: 'Avenir Book';
+            src: url('/fonts/AvenirBook.woff2') format('woff2'),
+                 url('/fonts/AvenirBook.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        
+        /* Redesigned Gallery Section */
+        .gallery {
+            padding: 80px 20px;
+            background-color: white;
+            text-align: center;
+        }
+        .gallery h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #b21f28;
+            font-family: 'Avenir Book', 'Avenir', sans-serif;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: minmax(200px, auto);
+            gap: 15px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            display: block;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+        /* Create varied heights for masonry effect */
+        .gallery-item:nth-child(1),
+        .gallery-item:nth-child(4) {
+            grid-row: span 2;
+        }
+        .gallery-item:nth-child(3),
+        .gallery-item:nth-child(6) {
+            grid-row: span 1.5;
+        }
+        
+        /* View More Button */
+        .view-more {
+            margin-top: 40px;
+        }
+        .view-more-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #b21f28;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .view-more-btn:hover {
+            background-color: #8a1920;
+            transform: translateY(-2px);
+        }
+        
+        .about-artist {
+            padding: 80px 40px;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: justify;
+        }
+        .about-artist h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #b21f28;
+        }
+        .about-artist p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        .about-artist img {
+            max-width: 350px;
+            border-radius: 50%;
+            margin-right: 40px;
+            margin-bottom: 20px;
+        }
+        .contact {
+            padding: 80px 40px;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        .contact h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #b21f28;
+        }
+        .contact p {
+            max-width: 600px;
+            margin: 0 auto 20px;
+            font-size: 18px;
+        }
+        .contact-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border: 2px solid #b21f28;
+            color: #b21f28;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+        .contact-btn:hover {
+            background: #b21f28;
+            color: white;
+            border-color: transparent;
+        }
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: #a23846;
+            color: white;
+        }
+        .social-links {
+            margin-bottom: 20px;
+        }
+        .social-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 24px;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Sofia Grassivaro</div>
+        <div class="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="page1.html">Runway</a></li>
+            <li><a href="page2.html">Editorial</a></li>
+            <li><a href="page3.html">Prosthetics / SFX</a></li>
+            <li><a href="page4.html">Commercial</a></li>
+            <li><a href="page5.html">Film</a></li>
+            <li><a href="page7.html">Wigs & Hairstyling</a></li>
+            <li><a href="page6.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <img src="Logo.png" alt="Sofia Grassivaro">
+        <h2>Makeup Artist</h2>
+    </section>
+    
+    <!-- Redesigned Gallery Section -->
+    <section class="gallery">
+        <h2>Portfolio</h2>
+        <div class="gallery-container">
+            <div class="gallery-item">
+                <img src="Photoshoots/Runway/img1.jpg" alt="Runway makeup work">
+            </div>
+            <div class="gallery-item">
+                <img src="Photoshoots/Commercial/1.JPG" alt="Commercial makeup work">
+            </div>
+            <div class="gallery-item">
+                <img src="Photoshoots/Fashion&Editorial/2.jpg" alt="Editorial makeup work">
+            </div>
+            <div class="gallery-item">
+                <img src="Photoshoots/FilmProductions/fashionfilm/1.jpg" alt="Film makeup work">
+            </div>
+            <div class="gallery-item">
+                <img src="Photoshoots/Prosthetics:SFX/2.HEIC" alt="Prosthetics makeup work">
+            </div>
+            <div class="gallery-item">
+                <img src="Photoshoots/Prosthetics:SFX/PPP/8.heic" alt="Hairstyling work">
+            </div>
+        </div>
+    </section>
+
+    <section class="about-artist">
+        <img src="SofiaEdit.png" alt="Sofia Grassivaro">
+        <div>
+            <h2>About me</h2>
+            <p>Hi! I'm Sofia Grassivaro, a professional hair and makeup artist with a passion for innovation and transformation. I graduated from Arts University Bournemouth specializing in fashion, editorial, prosthetics, and hairstyling. I take inspiration from artists and art movements, focusing on the patterns and shapes seen in the world around me to embed within my work. I love to collaborate with designers, brands and photographers to create withing the fashion and film industry. 
+                <br>
+                <br>
+                As a make-up artist, I focus on clean, natural make-up looks necessary for skincare brands as well as crazy makeups and hair styles seen within the fashion industry. One of my main goals as a make-up artist is to incorporate more the use of prosthetics in fashion runways.</p>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h2>Get In Touch</h2>
+        <p>Interested in working together? Contact me for collaborations and bookings.</p>
+        <a href="mailto:sofiagrassivaromua@gmail.com" class="contact-btn">Contact Me</a>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/sofiagrassivaro_mua/" target="_blank" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/sofia-grassivaro/" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+        <p>&copy; 2025 Sofia Grassivaro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+        const header = document.querySelector('header');
+        const heroSection = document.querySelector('.hero');
+        
+        // Calculate when hero section ends
+        const heroHeight = heroSection.offsetHeight;
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+        
+        // Scroll event listener
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > heroHeight) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

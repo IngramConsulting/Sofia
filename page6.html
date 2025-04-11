@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sofia Grassivaro - Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=ModernoOT:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .kiss-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .kiss-background .kiss-print {
+      position: absolute;
+      width: 60px;
+      height: auto;
+      opacity: 0.15;
+      transform: rotate(calc(1deg * var(--angle)));
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: transparent;
+      box-shadow: none;
+      z-index: 1000;
+    }
+    .logo {
+      font-family: 'Avenir Book', 'Avenir', sans-serif;
+      font-size: 25px;
+        font-weight: 500;
+      color: white;
+    }
+    .hamburger {
+      display: block;
+      cursor: pointer;
+      z-index: 1100;
+    }
+    .hamburger div {
+      width: 30px;
+      height: 4px;
+      background-color: white;
+      margin: 6px;
+      transition: 0.3s;
+    }
+    .sidebar {
+      position: fixed;
+      right: -250px;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(100px);
+      padding: 80px 30px;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+      transition: 0.4s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-family: 'ModernoOT', serif;
+    }
+    .sidebar.active {
+      right: 0;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      text-align: center;
+    }
+    .sidebar ul li {
+      margin-bottom: 20px;
+    }
+    .sidebar ul li a {
+      color: #b21f28;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    .sidebar ul li a:hover {
+      color: #1c1c1c;
+      transform: scale(1.2);
+    }
+    .contact-hero {
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url('1.JPG') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .contact-hero img {
+      max-width: 700px;
+      margin-bottom: 20px;
+    }
+    .contact-hero h1 {
+      font-size: 3vw;
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-family: 'ModernoOT', serif;
+    }
+    .contact-container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .contact-info {
+      flex: 1;
+      min-width: 300px;
+      padding: 30px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-right: 30px;
+      margin-bottom: 30px;
+    }
+    .contact-info h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #b21f28;
+      font-family: 'ModernoOT', serif;
+    }
+    .contact-details {
+      margin-bottom: 30px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .contact-icon {
+      color: #b21f28;
+      font-size: 20px;
+      margin-right: 15px;
+      margin-top: 3px;
+    }
+    .contact-text h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    .contact-text p, .contact-text a {
+      color: #666;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-text a:hover {
+      color: #b21f28;
+    }
+    .contact-form {
+      flex: 1;
+      min-width: 300px;
+      padding: 30px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .contact-form h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #b21f28;
+      font-family: 'ModernoOT', serif;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #b21f28;
+      outline: none;
+    }
+    .form-group textarea {
+      height: 150px;
+      resize: vertical;
+    }
+    .submit-btn {
+      background: #b21f28;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .submit-btn:hover {
+      background: #8a1a22;
+    }
+    footer {
+      padding: 40px;
+      text-align: center;
+      background: #a23846;
+      color: white;
+    }
+    .social-links {
+      margin-bottom: 20px;
+    }
+    .social-links a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 24px;
+      transition: transform 0.3s, color 0.3s;
+    }
+    .social-links a:hover {
+      transform: scale(1.2);
+      color: #f8f8f8;
+    }
+    @media (max-width: 768px) {
+      .contact-hero h1 {
+        font-size: 5vw;
+      }
+      .contact-container {
+        flex-direction: column;
+      }
+      .contact-info {
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 💋 KISS BACKGROUND EFFECT -->
+  <div class="kiss-background" aria-hidden="true"></div>
+
+  <header>
+    <div class="logo">Sofia Grassivaro</div>
+    <div class="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <nav class="sidebar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="page1.html">Runway</a></li>
+      <li><a href="page2.html">Editorial</a></li>
+      <li><a href="page3.html">Prosthetics / SFX</a></li>
+      <li><a href="page4.html">Commercial</a></li> 
+      <li><a href="page5.html">Film</a></li>
+      <li><a href="page7.html">Wigs & Hairstyling</a></li>
+      <li><a href="page6.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="contact-hero">
+    <img src="Logo.png" alt="Sofia Grassivaro" />
+    <h1>Get In Touch</h1>
+  </section>
+
+  <div class="contact-container">
+    <div class="contact-info">
+      <h2>Contact Information</h2>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-text">
+            <h3>Email</h3>
+            <a href="mailto:sofiagrassivaromua@gmail.com">sofiagrassivaromua@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-phone"></i></div>
+          <div class="contact-text">
+            <h3>Phone</h3>
+            <a href="tel:+447707349833">UK: +44 7707349833</a><br />
+            <a href="tel:+393450841145">IT: +39 3450841145</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="contact-text">
+            <h3>Location</h3>
+            <p>London & Milan</p>
+          </div>
+        </div>
+      </div>
+      <h2>Social Media</h2>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fab fa-instagram"></i></div>
+        <div class="contact-text">
+          <h3>Instagram</h3>
+          <a href="https://www.instagram.com/sofiagrassivaro_mua/" target="_blank">@sofiagrassivaro_mua</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+        <div class="contact-text">
+          <h3>LinkedIn</h3>
+          <a href="https://www.linkedin.com/in/sofia-grassivaro/" target="_blank">Sofia Grassivaro</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h2>Send Me a Message 💋</h2>
+      <form action="#" method="POST">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required/>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required/>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" required/>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://www.instagram.com/sofiagrassivaro_mua/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/sofia-grassivaro/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <p>&copy; 2025 Sofia Grassivaro. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Sidebar toggle functionality
+    const hamburger = document.querySelector('.hamburger');
+    const sidebar = document.querySelector('.sidebar');
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+        sidebar.classList.remove('active');
+      }
+    });
+
+    // Kiss prints background
+    const kissContainer = document.querySelector('.kiss-background');
+    const kissCount = 40;
+
+    for (let i = 0; i < kissCount; i++) {
+      const kiss = document.createElement('img');
+      kiss.src = 'thumbnail_lips.png'; // Make sure the file is in the same folder
+      kiss.classList.add('kiss-print');
+      kiss.style.top = Math.random() * 100 + 'vh';
+      kiss.style.left = Math.random() * 100 + 'vw';
+      kiss.style.setProperty('--angle', Math.floor(Math.random() * 360));
+      kissContainer.appendChild(kiss);
+    }
+  </script>
+</body>
+</html>
